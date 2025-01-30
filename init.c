@@ -6,7 +6,7 @@
 /*   By: ezeppa <ezeppa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:58:38 by ezeppa            #+#    #+#             */
-/*   Updated: 2025/01/30 20:15:30 by ezeppa           ###   ########.fr       */
+/*   Updated: 2025/01/30 21:30:01 by ezeppa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	init_app(t_app *app)
 	app->mlx = mlx_init();
 	app->mlx_win = mlx_new_window(app->mlx, 800, 800, "so_long");
 	app->map.cells = NULL;
+	app->map.width = 0;
+	app->map.height = 0;
 	app->nb_moves = 0;
 	app->nb_collectibles = 0;
 	app->collectibles = malloc(sizeof(t_entity *) * 100);
