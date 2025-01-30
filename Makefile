@@ -12,6 +12,7 @@ INCLUDES = -Iinclude -I$(LIBFT_FOLDER)/include -I$(MLX_FOLDER)
 LDFLAGS = -L$(LIBFT_FOLDER)/lib -L$(MLX_FOLDER) -lft -lmlx -lXext -lX11 -lm
 
 SRCS =	check.c\
+		check1.c\
 		draw.c\
 		entity.c\
 		event.c\

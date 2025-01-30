@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezeppa <ezeppa@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 20:06:18 by ezeppa            #+#    #+#             */
+/*   Updated: 2025/01/30 20:07:46 by ezeppa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 char	*get_file_str(char *filename)
@@ -23,13 +35,11 @@ char	*get_file_str(char *filename)
 	return (file_str);
 }
 
-void flood_fill(char **map, int x, int y)
+void	flood_fill(char **map, int x, int y)
 {
-	if (map[y][x] == '1' || map[y][x] == 'F') 
-		return;
-
+	if (map[y][x] == '1' || map[y][x] == 'F')
+		return ;
 	map[y][x] = 'F';
-
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x - 1, y);
 	flood_fill(map, x, y + 1);
@@ -38,45 +48,26 @@ void flood_fill(char **map, int x, int y)
 
 int	ft_strslen(char **strs)
 {
-	int i;
+	int	i;
 
-	for (i = 0; strs[i]; i++);
+	i = 0;
+	while (strs[i])
+		i++;
 	return (i);
 }
 
-char **copy_map_function(char **map)
+char	**copy_map_function(char **map)
 {
-	int i;
-	char **copy_map;
+	int		i;
+	char	**copy_map;
 
 	copy_map = malloc(sizeof(char *) * (ft_strslen(map) + 1));
-	for (i = 0; map[i]; i++)
+	i = 0;
+	while (map[i])
+	{
 		copy_map[i] = ft_strdup(map[i]);
+		i++;
+	}
 	copy_map[i] = NULL;
-
 	return (copy_map);
-}
-
-void	check_map(t_app *app, char *filename)
-{
-	char	*map_str = get_file_str(filename);
-	if (!map_str)
-	{
-		ft_printf("Error\nUnable to open the file.\n");
-		exit_program(app);
-	}
-	char	**map = ft_split(map_str, '\n');
-
-	if (!check_valid_chars(map)
-		|| !check_required_elements(map)
-		|| !check_rectangle(map)
-		|| !check_walls(map)
-		|| !check_valid_path(map))
-	{
-		free(map_str);
-		free_map(map);
-		exit_program(app);
-	}
-	free(map_str);
-	free_map(map);
 }

@@ -1,19 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezeppa <ezeppa@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 19:23:57 by ezeppa            #+#    #+#             */
+/*   Updated: 2025/01/30 19:47:36 by ezeppa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-int check_valid_chars(char **map)
+int	check_valid_chars(char **map)
 {
-	int i, j;
-	
+	int	i;
+	int	j;
+
 	i = 0;
 	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] != '0' && 
-				map[i][j] != '1' && 
+			if (map[i][j] != '0' &&
+				map[i][j] != '1' &&
 				map[i][j] != 'C' &&
-				map[i][j] != 'E' && 
+				map[i][j] != 'E' &&
 				map[i][j] != 'P')
 			{
 				ft_printf("Error\nInvalid character in the map.\n");
@@ -26,37 +39,42 @@ int check_valid_chars(char **map)
 	return (1);
 }
 
-int check_required_elements(char **map)
+int	check_required_elements(char **map)
 {
-	int i, j;
-	int count_p = 0, count_e = 0, count_c = 0;
+	int	count_pe;
+	int	count_c;
+	int	i;
+	int	j;
 
-	i = 0;
-	while (map[i])
+	count_pe = 0;
+	count_c = 0;
+	i = -1;
+	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
-			if (map[i][j] == 'P') count_p++;
-			if (map[i][j] == 'E') count_e++;
-			if (map[i][j] == 'C') count_c++;
-			j++;
+			if (map[i][j] == 'P')
+				count_pe++;
+			if (map[i][j] == 'E')
+				count_pe++;
+			if (map[i][j] == 'C')
+				count_c++;
 		}
-		i++;
 	}
-	if (count_p != 1 || count_e != 1 || count_c < 1)
-	{
-		ft_printf("Error\nThe map must contain 1 P, 1 E, and at least 1 C.\n");
-		return (0);
-	}
+	if (count_pe != 2 || count_c < 1)
+		return (ft_printf
+			("Error\nThe map must contain 1 P, 1 E, and at least 1 C.\n"), 0);
 	return (1);
 }
 
-int check_rectangle(char **map)
+int	check_rectangle(char **map)
 {
-	int i = 0;
-	int width = strlen(map[0]);
+	int	i;
+	int	width;
 
+	i = 0;
+	width = ft_strlen(map[0]);
 	while (map[i])
 	{
 		if ((int)strlen(map[i]) != width)
@@ -69,56 +87,56 @@ int check_rectangle(char **map)
 	return (1);
 }
 
-int check_walls(char **map)
+int	check_walls(char **map)
 {
-	int i, j;
-	int width = strlen(map[0]);
-	int height = 0;
+	int	i;
+	int	j;
+	int	width;
+	int	height;
 
+	width = strlen(map[0]);
+	height = 0;
 	while (map[height])
 		height++;
-
-	for (j = 0; j < width; j++)
+	j = -1;
+	while (++j < width)
 	{
 		if (map[0][j] != '1' || map[height - 1][j] != '1')
-		{
-			ft_printf("Error\nThe map must be surrounded by walls.\n");
-			return (0);
-		}
+			return (ft_printf
+				("Error\nThe map must be surrounded by walls.\n"), 0);
 	}
-
-	for (i = 0; i < height; i++)
+	i = -1;
+	while (++i < height)
 	{
 		if (map[i][0] != '1' || map[i][width - 1] != '1')
-		{
-			ft_printf("Error\nThe map must be surrounded by walls.\n");
-			return (0);
-		}
+			return (ft_printf
+				("Error\nThe map must be surrounded by walls.\n"), 0);
 	}
 	return (1);
 }
 
-int check_valid_path(char **map)
+void	check_map(t_app *app, char *filename)
 {
-	int x, y, i, j;
-	char **copy_map;
+	char	*map_str;
+	char	**map;
 
-	for (y = 0; map[y]; y++)
-		for (x = 0; map[y][x]; x++)
-			if (map[y][x] == 'P')
-				goto found;
-found:
-
-	copy_map = copy_map_function(map);
-	flood_fill(copy_map, x, y);
-
-	for (i = 0; copy_map[i]; i++)
-		for (j = 0; copy_map[i][j]; j++)
-			if (copy_map[i][j] == 'C' || copy_map[i][j] == 'E')
-			{
-				ft_printf("Error\nNo valid path to the exit or collectibles.\n");
-				return (free_map(copy_map), 0);
-			}
-
-	return (free_map(copy_map), 1);
+	map_str = get_file_str(filename);
+	if (!map_str)
+	{
+		ft_printf("Error\nUnable to open the file.\n");
+		exit_program(app);
+	}
+	map = ft_split(map_str, '\n');
+	if (!check_valid_chars(map)
+		|| !check_required_elements(map)
+		|| !check_rectangle(map)
+		|| !check_walls(map)
+		|| !check_valid_path(map))
+	{
+		free(map_str);
+		free_map(map);
+		exit_program(app);
+	}
+	free(map_str);
+	free_map(map);
 }

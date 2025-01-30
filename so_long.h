@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezeppa <ezeppa@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 20:08:04 by ezeppa            #+#    #+#             */
+/*   Updated: 2025/01/30 20:08:18 by ezeppa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -7,11 +19,11 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-#define KEY_ESC 65307
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
 
 typedef enum e_cell_type
 {
@@ -118,6 +130,5 @@ void	flood_fill(char **map, int x, int y);
 int		ft_strslen(char **strs);
 char	**copy_map_function(char **map);
 void	refresh_screen(t_app *app);
-
 
 #endif

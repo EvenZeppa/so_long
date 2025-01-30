@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezeppa <ezeppa@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 19:54:03 by ezeppa            #+#    #+#             */
+/*   Updated: 2025/01/30 19:54:52 by ezeppa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void	move_entity(t_app *app, t_entity *entity, int x, int y)
@@ -12,16 +24,22 @@ void	move_entity(t_app *app, t_entity *entity, int x, int y)
 
 void	player_events(t_app *app)
 {
-	for (int i = 0; i < 100; i++)
+	int	i;
+
+	i = 0;
+	while (i < 100)
 	{
-		if (app->collectibles[i] && app->player->x == app->collectibles[i]->x && app->player->y == app->collectibles[i]->y)
+		if (app->collectibles[i] && app->player->x == app->collectibles[i]->x
+			&& app->player->y == app->collectibles[i]->y)
 		{
 			free(app->collectibles[i]);
 			app->collectibles[i] = NULL;
 			app->nb_collectibles--;
 		}
+		i++;
 	}
-	if (app->player->x == app->exit->x && app->player->y == app->exit->y && app->nb_collectibles == 0)
+	if (app->player->x == app->exit->x && app->player->y == app->exit->y
+		&& app->nb_collectibles == 0)
 		exit_program(app);
 }
 
