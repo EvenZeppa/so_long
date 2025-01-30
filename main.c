@@ -6,7 +6,7 @@
 /*   By: ezeppa <ezeppa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 20:05:58 by ezeppa            #+#    #+#             */
-/*   Updated: 2025/01/30 20:06:00 by ezeppa           ###   ########.fr       */
+/*   Updated: 2025/01/30 20:18:01 by ezeppa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	init_app(&app);
-	init_map(&app, argv[1]);
 	check_map(&app, argv[1]);
+	init_map(&app, argv[1]);
 	refresh_screen(&app);
 	draw_map(&app);
 	draw_entities(&app);

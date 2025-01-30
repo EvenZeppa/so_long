@@ -6,7 +6,7 @@
 /*   By: ezeppa <ezeppa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:58:38 by ezeppa            #+#    #+#             */
-/*   Updated: 2025/01/30 20:05:41 by ezeppa           ###   ########.fr       */
+/*   Updated: 2025/01/30 20:15:30 by ezeppa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ void	init_imgs(t_app *app)
 	app->imgs.exit.img = mlx_xpm_file_to_image
 		(app->mlx, "images/exit.xpm",
 			&app->imgs.exit.width, &app->imgs.exit.height);
+	if (!app->imgs.empty.img || !app->imgs.player_a1.img
+		|| !app->imgs.player_a2.img || !app->imgs.wall.img
+		|| !app->imgs.collectible.img || !app->imgs.exit.img)
+	{
+		ft_printf("Error\nUnable to load images.\n");
+		exit_program(app);
+	}
 }
 
 void	set_map_dimensions(t_app *app, char **split)
@@ -102,6 +109,7 @@ void	init_app(t_app *app)
 
 	app->mlx = mlx_init();
 	app->mlx_win = mlx_new_window(app->mlx, 800, 800, "so_long");
+	app->map.cells = NULL;
 	app->nb_moves = 0;
 	app->nb_collectibles = 0;
 	app->collectibles = malloc(sizeof(t_entity *) * 100);
