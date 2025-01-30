@@ -11,7 +11,14 @@ MLX = $(MLX_FOLDER)/libmlx.a
 INCLUDES = -Iinclude -I$(LIBFT_FOLDER)/include -I$(MLX_FOLDER)
 LDFLAGS = -L$(LIBFT_FOLDER)/lib -L$(MLX_FOLDER) -lft -lmlx -lXext -lX11 -lm
 
-SRCS =	main.c
+SRCS =	check.c\
+		draw.c\
+		entity.c\
+		event.c\
+		free.c\
+		init.c\
+		main.c\
+		utils.c
 NAME = so_long
 
 all: $(LIBFT) $(MLX) $(NAME)
