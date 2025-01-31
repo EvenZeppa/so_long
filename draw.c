@@ -17,7 +17,6 @@ void	draw_map(t_app *app)
 	int	i;
 	int	j;
 
-	mlx_clear_window(app->mlx, app->mlx_win);
 	i = 0;
 	while (i < app->map.height)
 	{
