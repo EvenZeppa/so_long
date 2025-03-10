@@ -1,6 +1,5 @@
 CC = gcc
-# CFLAGS = -Wall -Wextra -Werror
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_FOLDER = ft_lib
 LIBFT = $(LIBFT_FOLDER)/libft.a
